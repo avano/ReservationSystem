@@ -1,0 +1,334 @@
+body {
+    background-color: #dddddd;
+    font-size: 11px;
+    font-family: Arial, Verdana, sans-serif;
+    color: #000000;  
+    margin: auto;
+}
+
+h1 {
+    font-family: Arial, Verdana, sans-serif;
+    font-size:  16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+
+a:link, a:visited {
+    color: #045491;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+a:link:hover, a:visited:hover  {
+    color: #045491;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+.container {
+    font-size: 11px;
+    font-family: Arial, Verdana, sans-serif;
+}
+
+.toolbar {
+    background:-o-linear-gradient(bottom, #E4F1D5 5%, #BCD0A5 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #E4F1D5), color-stop(1, #BCD0A5) );
+    background:-moz-linear-gradient( center top, #E4F1D5 5%, #BCD0A5 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#E4F1D5", endColorstr="#BCD0A5");	background: -o-linear-gradient(top,#E4F1D5,BCD0A5);
+    
+    padding: 1em;
+    font-size:0.8em;
+}
+
+.toolbar .nav {
+    float:right;
+}
+
+.toolbar button {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.searchBtn {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+.toolbar .caltitle {
+    text-align: center;
+    padding:0;
+    margin:0;
+    color: #495A34;
+}
+
+.container table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.container table td {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background: #eee;
+    border-width:1px 0;
+    border-style:solid;
+    color: #495A34;
+    width: auto;
+}
+.header table{
+    table-layout:fixed;
+}
+
+.header .scrollbar-shim {
+    width: 16px;
+}
+
+.day-column-header {
+    font-size: 11px;
+    text-align: center;
+    padding: 0.4em;
+}
+
+.id-column-header {
+    text-align: center;
+    padding: 0.4em;
+    width: 30px;
+}
+
+.day-column-body {
+    text-align: center;
+    padding: 0.4em;
+}
+
+.id-column-body {
+    text-align: center;
+    padding: 0.4em;
+    width: 30px;
+}
+.calbody {
+    overflow: auto;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    position: relative;
+}
+
+.odd {
+    background-color: #dddddd;
+}
+
+.even {
+    background-color: #ffffff;
+}
+
+.calbody table{
+    table-layout:fixed;
+    border-width: 1px 1px 1px 1px;
+    border-color: #fff000;
+}
+
+.indexPanel {
+    width: 450px; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.addRes {
+    position:absolute;
+    display: block;
+    width: 450px; 
+    margin-left: auto; 
+    margin-right: auto;
+    top:350px;
+    left:500px;
+}
+
+.calendar {
+    position: relative;
+}
+
+.output {
+    display: block;
+    color:#000000;
+    font-size:12px;
+    float:right;
+    width:100px;
+    text-align:left;
+    padding:5px 20px 5px 0;
+}
+
+.reserved {
+    background-color: #ff5b5b;
+    border:0px solid #B6AD84;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+}
+
+.myreserved {
+    background-color: #4987BC;
+    border:0px solid #B6AD84;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+}
+
+.partialreserved {
+    background-color: #CCFF99;
+    border:0px solid #B6AD84;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+}
+
+.free {
+    vertical-align: middle;
+    border:0px solid #B6AD84;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+    padding:7px;
+    font-family:Helvetica;
+    color:#000000;
+}
+
+.freePast {
+    vertical-align: middle;
+    border:0px solid #B6AD84;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+    padding:7px;
+    font-family:Helvetica;
+    color:#000000;
+}
+
+.myreservedPast {
+    vertical-align: middle;
+    border:0px solid #B6AD84;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+    background-color: #9DCEFF;
+    padding:7px;
+    font-family:Helvetica;
+    color:#000000;
+}
+
+.calbody tr:last-child td:last-child {
+
+    -moz-border-radius-bottomright:0px;
+
+    -webkit-border-bottom-right-radius:0px;
+
+    border-bottom-right-radius:0px;
+
+}
+
+.calbody table tr:first-child td:first-child {
+
+    -moz-border-radius-topleft:0px;
+
+    -webkit-border-top-left-radius:0px;
+
+    border-top-left-radius:0px;
+    border-width: 0px 3px 1px 0px;
+}
+
+.calbody table tr:first-child td:last-child {
+
+    -moz-border-radius-topright:0px;
+
+    -webkit-border-top-right-radius:0px;
+
+    border-top-right-radius:0px;
+
+
+}.calbody tr:last-child td:first-child{
+
+    -moz-border-radius-bottomleft:0px;
+
+    -webkit-border-bottom-left-radius:0px;
+
+    border-bottom-left-radius:0px;
+    border-width: 1px 3px 0px 0px;
+}
+
+.calbody tr:last-child td{
+    border-width: 0px 1px 0px 0px;
+
+}
+.calbody td:first-child {
+    border-width: 1px 3px 1px 0px;
+}
+
+.calbody tr:hover td.free {
+        background-color:#BCD0A5;
+}
+
+#calendar .ui-selecting {
+    background: #A9D4FF;
+}
+#calendar .ui-selected {
+    background: #70B8FF;
+}
+
+.calbody td {
+    vertical-align:middle;
+    border:1px solid #B6AD84;
+    border-width:0px 1px 1px 0px;
+    text-align:center;
+    padding:7px;
+    font-family: Century Gothic, sans-serif;
+}
+
+.calbody tr td:last-child{
+    border-width: 0px 0px 1px 0px;
+}
+
+.calbody tr:last-child td:last-child{
+    border-width:0px 0px 0px 0px;
+}
+
+.header tr:first-child td{
+    background:-o-linear-gradient(bottom, #E4F1D5 5%, #BCD0A5 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #E4F1D5), color-stop(1, #BCD0A5) );
+    background:-moz-linear-gradient( center top, #E4F1D5 5%, #BCD0A5 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#E4F1D5", endColorstr="#BCD0A5");	background: -o-linear-gradient(top,#E4F1D5,BCD0A5);
+    background-color:#bcbcbc;
+    border:0px solid #B6AD84;
+    text-align:center;
+    border-width:0px 1px 1px 1px;
+    font-size:12px;
+    font-family:Arial;
+    font-weight:bold;
+}
+
+.header tr:first-child:hover td {
+    background:-o-linear-gradient(bottom, #E4F1D5 5%, #BCD0A5 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #E4F1D5), color-stop(1, #BCD0A5) );
+    background:-moz-linear-gradient( center top, #E4F1D5 5%, #BCD0A5 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#E4F1D5", endColorstr="#BCD0A5");	background: -o-linear-gradient(top,#E4F1D5,BCD0A5);
+    background-color:#bcbcbc;
+}
+
+.header tr:first-child td:first-child {
+    border-width: 0px 3px 1px 1px;
+}
+
+
+.calbody tr:first-child td:first-child{
+    border-width:0px 1px 1px 0px;
+}
+
+.calbody tr:first-child td:last-child{
+    border-width:0px 0px 1px 1px;
+}
+
+.cellwidth {
+    width: 143px;
+}
+
+.panelClass {
+    display: inline-block;
+    float: left;
+}
+
+.divClass {
+    
+}

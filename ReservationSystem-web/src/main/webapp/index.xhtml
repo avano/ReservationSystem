@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:head>
+    </h:head>
+    <body>
+        <f:view locale="#{languageBean.locale}" id="main">
+            <ui:composition template="indexTemplate.xhtml">            
+                <ui:define name="content">
+                    <div class="indexPanel">
+                        <rich:panel header="#{msg.pleaseLogin}">        
+
+                            <rich:messages ajaxRendered="true"/>
+
+
+                            <h:form id="loginForm">
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="#{msg.enterLogin}:" class="output"/>
+                                    <h:inputText size="32" id="login" value="#{userBean.email}" validator="#{validationBean.checkEmail}" validatorMessage="#{msg.badEmail}">
+                                        <rich:validator/>
+                                    </h:inputText> 
+
+
+
+                                    <h:outputText value="#{msg.enterPassword}:" class="output" />
+
+                                    <h:inputSecret size="32" id="password" value="#{userBean.password}" validator="#{validationBean.checkPassword}" validatorMessage="#{msg.noPassword}">
+                                        <rich:validator/>
+                                    </h:inputSecret> 
+
+
+                                </h:panelGrid>
+                                <h:selectBooleanCheckbox id="remember" value="#{userBean.remember}" onclick="return check(this);"/> 
+                                <h:outputText value=" #{msg.rememberMe}" style="font-size: 12px"/>
+                                <br/><br/>
+                                <a4j:commandButton value="#{msg.login}" action="#{userBean.login}" styleClass="ui-corner-all" style="float:left"/>                                
+                            </h:form>   
+                            <h:form>
+                                <h:commandButton value="#{msg.lostPassword}" action="newPassword.xhtml?faces-redirect=true" styleClass="ui-corner-all" style="float:right;"/>
+                            </h:form>
+                            <br/><br/>
+                        </rich:panel>
+                    </div>
+
+                </ui:define>
+                <ui:define name="bottom">
+                    <ui:include src="bottomBar.xhtml"/>
+                </ui:define>
+            </ui:composition>
+        </f:view>
+    </body>
+</ui:composition>

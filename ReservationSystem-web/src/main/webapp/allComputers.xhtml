@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+
+    <head>
+    </head>
+
+    <body>
+        <f:view locale="#{languageBean.locale}"> <!-- defines the locale of the page -->
+            <ui:composition template="UITemplate.xhtml">
+                <ui:define name="top">
+                    <ui:include src="topBar.xhtml"/>
+                </ui:define>
+
+                <ui:define name="left">
+                    <ui:include src="leftBar.xhtml"/>
+                </ui:define>
+
+                <ui:define name="content">
+                    <rich:panel header="#{msg.computers}">
+                        <div id="deleteDialog" title="#{msg.confirmDelete}" style="display:none;">
+                            <a4j:outputPanel id="delete">
+                                <h:outputText value="#{msg.reallyDeleteComputer}?"/><br/><br/>
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="#{msg.compName}:"/>
+                                    <h:outputText value="#{computerBean.current.name}"/>
+                                    <h:outputText value="#{msg.ip}:"/>
+                                    <h:outputText value="#{computerBean.current.ip}"/>
+                                    <h:outputText value="#{msg.group}:"/>
+                                    <h:outputText value="#{computerBean.current.compGroup}"/>
+                                    <h:outputText value="#{msg.description}:"/>
+                                    <h:outputText value="#{computerBean.current.description}"/>
+                                </h:panelGrid>
+                                <br/>
+                            </a4j:outputPanel>
+                            <h:form>
+                                <center>
+                                    <h:commandButton value="#{msg.delete}" action="#{computerBean.deleteComputer()}" styleClass="ui-corner-all"/>
+                                </center>
+                            </h:form>
+                        </div>
+                        <rich:dataTable value="#{computerBean.computers}" var="comp" style="border:solid 1px; width: 100%">
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{msg.name}"/>
+                                </f:facet>
+                                <h:outputText value="#{comp.name}"/>
+                            </rich:column>
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{msg.ip}"/>
+                                </f:facet>
+                                <h:outputText value="#{comp.ip}"/>
+                            </rich:column>
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{msg.group}"/>
+                                </f:facet>
+                                <h:outputText value="#{comp.compGroup}"/>
+                            </rich:column>
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{msg.description}"/>
+                                </f:facet>
+                                <h:outputText value="#{comp.description}"/>
+                            </rich:column>
+                            <rich:column style="width: 50px;">
+                                <f:facet name="header">
+                                    <h:outputText value="#{msg.details}"/>
+                                </f:facet>
+                                <h:form>
+                                    <h:commandLink action="#{computerBean.viewDetails()}" value="#{msg.details}"/><br/>
+                                    <a4j:commandLink action="#{computerBean.getCurrentComputer()}" onclick="showDeleteDialog();" value="#{msg.delete}" render="delete" rendered="#{userBean.getUserSes().admin}"/>
+                                </h:form>
+                            </rich:column>
+                        </rich:dataTable>
+                        <script type="text/javascript">
+                            function showDeleteDialog() {
+                                $j("#deleteDialog").dialog({modal:true, width: 'auto'});
+                            }
+                        </script>
+                    </rich:panel>
+                </ui:define>
+
+                <ui:define name="bottom">
+                    <ui:include src="bottomBar.xhtml"/>
+                </ui:define>
+
+            </ui:composition>
+        </f:view>
+    </body>
+</html>

@@ -1,0 +1,35 @@
+
+<ui:composition template="./UITemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    </h:head>
+
+    <ui:define name="content">
+        <rich:panel header="#{msg.report}">
+            <a4j:mediaOutput element="object" style="width:1000px; height:600px;" mimeType="application/pdf" id="media" createContent="#{reportBean.createReport}" value="1" cacheable="false" standby="Generating">
+            </a4j:mediaOutput>
+        </rich:panel>
+    </ui:define>
+
+    <ui:define name="left">
+        <ui:include src="leftBar.xhtml"/>
+    </ui:define>
+
+    <ui:define name="top">
+        <ui:include src="topBar.xhtml"/>
+    </ui:define>
+
+    <ui:define name="bottom">
+        <ui:include src="bottomBar.xhtml"/>
+    </ui:define>
+
+
+
+</ui:composition>

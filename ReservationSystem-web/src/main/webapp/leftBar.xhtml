@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich">
+    <head>
+    </head>
+    <ui:composition>
+        <f:view locale="#{languageBean.locale}" id="main">
+            <h:form>
+                <rich:panelMenu id="panelMenu" mode="ajax" topGroupExpandedRightIcon="chevronUp"
+                                topGroupCollapsedRightIcon="chevronDown"
+                                groupExpandedLeftIcon="disc"
+                                groupCollapsedLeftIcon="disc"
+                                itemLeftIcon="triangle" expandSingle="false">
+                    <rich:panelMenuGroup label="#{msg.users}" expanded="true">
+                        <rich:panelMenuItem label="#{msg.addNewUser}" action="addNewUser.xhtml?faces-redirect=true" rendered="#{userBean.getUserSes().admin}"/>
+                        <rich:panelMenuItem label="#{msg.import}" action="import.xhtml?faces-redirect=true" rendered="#{userBean.getUserSes().admin}"/>
+                        <rich:panelMenuItem label="#{msg.getAllUsers}" action="allUsers.xhtml?faces-redirect=true" rendered="#{userBean.getUserSes().admin}"/>
+                        <rich:panelMenuItem label="#{msg.myProfile}" action="#{userBean.viewDetails('current')}"/>
+                    </rich:panelMenuGroup>
+                    <rich:panelMenuGroup label="#{msg.computers}" expanded="true">
+                        <rich:panelMenuItem label="#{msg.addNewComputer}" action="addNewComputer.xhtml?faces-redirect=true" rendered="#{userBean.getUserSes().admin}"/>
+                        <rich:panelMenuItem label="#{msg.getAllComputers}" action="allComputers.xhtml?faces-redirect=true"/>
+                        <rich:panelMenuItem label="#{msg.calendar}" action="calendar.xhtml?faces-redirect=true"/>
+                        <rich:panelMenuItem label="#{msg.report}" action="report.xhtml?faces-redirect=true"/>
+                    </rich:panelMenuGroup>
+                </rich:panelMenu>
+            </h:form>
+
+        </f:view>
+    </ui:composition>
+</html>

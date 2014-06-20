@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <head>
+        <title>TODO supply a title</title>
+    </head>
+    <ui:composition>
+        <f:view locale="#{languageBean.locale}" id="main">
+        <h:outputText value="#{msg.currentlyLogged} #{userBean.getEmailSes()}" style="float: right" /><br/>
+        <h:form>
+            <a4j:commandButton value="#{msg.logout}" style="width: 120px; float: right" action="#{userBean.logout}" styleClass="ui-corner-all"/>
+        </h:form>
+        </f:view>
+    </ui:composition>
+</html>

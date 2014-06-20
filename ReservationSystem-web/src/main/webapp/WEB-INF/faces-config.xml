@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+              xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    <managed-bean>
+        <description>Session bean for all operations with users</description>
+        <managed-bean-name>userBean</managed-bean-name>
+        <managed-bean-class>cz.muni.fi.dp.reservationsystem.bean.UserBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <description>Session bean for all operations with computers</description>
+        <managed-bean-name>computerBean</managed-bean-name>
+        <managed-bean-class>cz.muni.fi.dp.reservationsystem.bean.ComputerBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <description>Session bean for all operations with reservations</description>
+        <managed-bean-name>reservationBean</managed-bean-name>
+        <managed-bean-class>cz.muni.fi.dp.reservationsystem.bean.ReservationBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <description>Bean that holds info about the localization</description>
+        <managed-bean-name>languageBean</managed-bean-name>
+        <managed-bean-class>cz.muni.fi.dp.reservationsystem.bean.LanguageBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <description>Bean for getting infos from sessions</description>
+        <managed-bean-name>requestBean</managed-bean-name>
+        <managed-bean-class>cz.muni.fi.dp.reservationsystem.bean.RequestBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <description>Bean for sorting tables</description>
+        <managed-bean-name>sortingBean</managed-bean-name>
+        <managed-bean-class>cz.muni.fi.dp.reservationsystem.bean.SortingBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    
+    <application>
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>cs</supported-locale>
+            <supported-locale>sk</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+    </application>
+    
+    <validator>
+        <validator-id>validationBean</validator-id>
+        <validator-class>cz.muni.fi.dp.reservationsystem.bean.ValidationBean</validator-class>
+    </validator>
+    <managed-bean>
+        <description>Bean for creating reports using jasperreports</description>
+        <managed-bean-name>reportBean</managed-bean-name>
+        <managed-bean-class>cz.muni.fi.dp.reservationsystem.bean.ReportBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <description>represents adding a new user</description>
+        <managed-bean-name>newUserBean</managed-bean-name>
+        <managed-bean-class>cz.muni.fi.dp.reservationsystem.bean.NewUserBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+</faces-config>
