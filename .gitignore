@@ -12,7 +12,8 @@ target/
 .metadata
 /RemoteSystemsTempFiles
 .xml/
-
+*.NavData
+nb-configuration.xml
 # IntelliJ IDEA workspace
 *.ipr
 *.iml
