@@ -1,241 +1,348 @@
 
 <ui:composition template="./UITemplate.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a4j="http://richfaces.org/a4j"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:f="http://java.sun.com/jsf/core">
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core">
 
-    <h:head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    </h:head>
+	<h:head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	</h:head>
 
-    <ui:define name="content">
-        <rich:collapsiblePanel header="#{msg.myProfile}" switchType="client">
-            <div>
-                <rich:message for="newPasswordForm"/>
-                <h:form id="newPasswordForm">
-                    <h:panelGrid columns="2">
-                        <h:outputText value="#{msg.name}:"/>
-                        <h:inputText value="#{userBean.current.userName}" validator="#{validationBean.checkPassword}" validatorMessage="#{msg.userNameEmpty}"><rich:validator/></h:inputText>
-                        <h:outputText value="E-mail:"/>
-                        <h:inputText value="#{userBean.current.email}" validator="#{validationBean.checkEmail}" validatorMessage="#{msg.badEmail}"><rich:validator/></h:inputText>
-                        <h:outputText value="#{msg.adminRights}:" rendered="#{userBean.current.admin and userBean.userSes.admin}"/>
-                        <h:outputText value="#{msg.yes}" rendered="#{userBean.current.admin and userBean.userSes.admin}"/>
-                        <h:outputText value="#{msg.adminRights}:" rendered="#{!userBean.current.admin and userBean.userSes.admin}"/>                        
-                        <h:outputText value="#{msg.no}" rendered="#{!userBean.current.admin and userBean.userSes.admin}"/>
+	<ui:define name="content">
+		<rich:collapsiblePanel header="#{msg.myProfile}" switchType="client">
+			<div>
+				<rich:message for="newPasswordForm" />
+				<h:form id="newPasswordForm">
+					<h:panelGrid columns="2">
+						<h:outputText value="#{msg.name}:" />
+						<h:inputText value="#{userBean.current.userName}"
+							validator="#{validationBean.checkPassword}"
+							validatorMessage="#{msg.userNameEmpty}">
+							<rich:validator />
+						</h:inputText>
+						<h:outputText value="E-mail:" />
+						<h:inputText value="#{userBean.current.email}"
+							validator="#{validationBean.checkEmail}"
+							validatorMessage="#{msg.badEmail}">
+							<rich:validator />
+						</h:inputText>
+						<h:outputText value="#{msg.adminRights}:"
+							rendered="#{userBean.current.admin and userBean.userSes.admin}" />
+						<h:outputText value="#{msg.yes}"
+							rendered="#{userBean.current.admin and userBean.userSes.admin}" />
+						<h:outputText value="#{msg.adminRights}:"
+							rendered="#{!userBean.current.admin and userBean.userSes.admin}" />
+						<h:outputText value="#{msg.no}"
+							rendered="#{!userBean.current.admin and userBean.userSes.admin}" />
 
-                    </h:panelGrid>
-                    <h:commandButton id="grantButton" value="#{msg.grantAdmin}" action="#{userBean.grantRevoke()}" rendered="#{!userBean.current.admin and userBean.userSes.admin}" styleClass="ui-corner-all"/>
-                    <h:commandButton id="revokeButton" value="#{msg.revokeAdmin}" action="#{userBean.grantRevoke()}" rendered="#{userBean.current.admin and userBean.userSes.admin}" styleClass="ui-corner-all"/>
-                    <a4j:commandButton id="changePasswordButton" value="#{msg.changePassword}" onclick="showHidePassword();" styleClass="ui-corner-all" rendered="#{userBean.current.equals(userBean.getUserSes())}"/>                        
-                    <div id="newPasswordDiv" style="display:none; left: 180px">
-                        <h:panelGrid columns="2">
-                            <h:outputText value="#{msg.newPassword}:"/>
-                            <h:inputSecret id="newPassword" value="#{userBean.newPassword}"/>  
-                            <h:outputText value="#{msg.confirmPassword}:"/>
-                            <h:inputSecret id="confirmPassword" value="#{userBean.confirmPassword}"/>
-                        </h:panelGrid>     
-                    </div>
-                    <br/>
-                    <div>
-                        <h:commandButton id="newPasswordButton" value="#{msg.save}" action="#{userBean.update()}" styleClass="ui-corner-all"/>
-                    </div>
-                </h:form>
-            </div>
-        </rich:collapsiblePanel>
-        <rich:collapsiblePanel switchType="client" id="reservations" header="#{msg.myReservations}">
-            <h:outputText value="#{msg.userNoRes2}" rendered="#{!reservationBean.userHasReservations(userBean.current,userBean.method)}"/>
-            <div>
-                <rich:message for="test" ajaxRendered="true"/>
-                <div id="deleteDialog" title="#{msg.confirmDelete}" style="display:none;">
-                    <a4j:outputPanel id="delete">
-                        <h:outputText value="#{msg.reallyDelete}?"/><br/><br/>
-                        <h:panelGrid columns="2">
-                            <h:outputText value="#{msg.user}:"/>
-                            <h:outputText value="#{reservationBean.current.user.userName}"/>
-                            <h:outputText value="#{msg.compName}:"/>
-                            <h:outputText value="#{reservationBean.current.computer.name}"/>
-                            <h:outputText value="#{msg.since}:"/>
-                            <h:outputText value="#{reservationBean.getDateFormat(reservationBean.current.since)}"/>
-                            <h:outputText value="#{msg.until}:"/>
-                            <h:outputText value="#{reservationBean.getDateFormat(reservationBean.current.until)}"/>
-                        </h:panelGrid>
-                        <br/>
-                    </a4j:outputPanel>
-                    <h:form>
-                        <center>
-                            <h:commandButton value="#{msg.delete}" action="#{reservationBean.deleteReservation()}" styleClass="ui-corner-all"/>
-                        </center>
-                    </h:form>
-                </div>
-                <div id="cancelDialog" title="#{msg.confirmCancel}" style="display:none;">
-                    <a4j:outputPanel id="cancelPanel">
-                        <h:outputText value="#{msg.reallyCancel}?"/><br/><br/>
-                        <h:panelGrid columns="2">
-                            <h:outputText value="#{msg.user}:"/>
-                            <h:outputText value="#{reservationBean.current.user.userName}"/>
-                            <h:outputText value="#{msg.compName}:"/>
-                            <h:outputText value="#{reservationBean.current.computer.name}"/>
-                            <h:outputText value="#{msg.since}:"/>
-                            <h:outputText value="#{reservationBean.getDateFormat(reservationBean.current.since)}"/>
-                            <h:outputText value="#{msg.until}:"/>
-                            <h:outputText value="#{reservationBean.getDateFormat(reservationBean.current.until)}"/>
-                        </h:panelGrid>
-                        <br/>
-                    </a4j:outputPanel>
-                    <h:form>
-                        <center>
-                            <h:commandButton value="#{msg.confirmCancel}" action="#{reservationBean.cancelReservation()}" styleClass="ui-corner-all"/>
-                        </center>
-                    </h:form>
-                </div>
-                <div id="editDialog" title="#{msg.editReservation}" style="display:none;" >
-                    <div>
-                        <h:form id="frm">
-                            <a4j:outputPanel id="edit">
-                                <h:panelGrid columns="2">
-                                    <h:outputText value="#{msg.userName}:"/>
-                                    <h:outputText id="test" value="#{reservationBean.current.user.userName}" style="width: 130px;"/>
-                                    <h:outputText value="#{msg.compName}:"/>
-                                    <h:selectOneMenu value="#{reservationBean.editComputer}" style="width: 132px;">
-                                        <f:selectItems value="#{computerBean.getComputersArray()}" var="c"
-                                                       itemLabel="#{c.name}" itemValue="#{c.id}" />
-                                        <a4j:ajax event="change" render="table"/>
-                                    </h:selectOneMenu>
+					</h:panelGrid>
+					<h:commandButton id="grantButton" value="#{msg.grantAdmin}"
+						action="#{userBean.grantRevoke()}"
+						rendered="#{!userBean.current.admin and userBean.userSes.admin}"
+						styleClass="ui-corner-all" />
+					<h:commandButton id="revokeButton" value="#{msg.revokeAdmin}"
+						action="#{userBean.grantRevoke()}"
+						rendered="#{userBean.current.admin and userBean.userSes.admin}"
+						styleClass="ui-corner-all" />
+					<a4j:commandButton id="changePasswordButton"
+						value="#{msg.changePassword}" onclick="showHidePassword();"
+						styleClass="ui-corner-all"
+						rendered="#{userBean.current.equals(userBean.getUserSes())}" />
+					<div id="newPasswordDiv" style="display: none; left: 180px">
+						<h:panelGrid columns="2">
+							<h:outputText value="#{msg.newPassword}:" />
+							<h:inputSecret id="newPassword" value="#{userBean.newPassword}" />
+							<h:outputText value="#{msg.confirmPassword}:" />
+							<h:inputSecret id="confirmPassword"
+								value="#{userBean.confirmPassword}" />
+						</h:panelGrid>
+					</div>
+					<br />
+					<div>
+						<h:commandButton id="newPasswordButton" value="#{msg.save}"
+							action="#{userBean.update()}" styleClass="ui-corner-all" />
+					</div>
+				</h:form>
+			</div>
+		</rich:collapsiblePanel>
+		<rich:collapsiblePanel switchType="client" id="reservations"
+			header="#{msg.myReservations}">
+			<h:outputText value="#{msg.userNoRes2}"
+				rendered="#{!reservationBean.userHasReservations(userBean.current,userBean.method)}" />
+			<div>
+				<rich:message for="test" ajaxRendered="true" />
+				<div id="deleteDialog" title="#{msg.confirmDelete}"
+					style="display: none;">
+					<a4j:outputPanel id="delete">
+						<h:outputText value="#{msg.reallyDelete}?" />
+						<br />
+						<br />
+						<h:panelGrid columns="2">
+							<h:outputText value="#{msg.user}:" />
+							<h:outputText value="#{reservationBean.current.user.userName}" />
+							<h:outputText value="#{msg.compName}:" />
+							<h:outputText value="#{reservationBean.current.computer.name}" />
+							<h:outputText value="#{msg.since}:" />
+							<h:outputText
+								value="#{reservationBean.getDateFormat(reservationBean.current.since)}" />
+							<h:outputText value="#{msg.until}:" />
+							<h:outputText
+								value="#{reservationBean.getDateFormat(reservationBean.current.until)}" />
+						</h:panelGrid>
+						<br />
+					</a4j:outputPanel>
+					<h:form>
+						<center>
+							<h:commandButton value="#{msg.delete}"
+								action="#{reservationBean.deleteReservation()}"
+								styleClass="ui-corner-all" />
+						</center>
+					</h:form>
+				</div>
+				<div id="cancelDialog" title="#{msg.confirmCancel}"
+					style="display: none;">
+					<a4j:outputPanel id="cancelPanel">
+						<h:outputText value="#{msg.reallyCancel}?" />
+						<br />
+						<br />
+						<h:panelGrid columns="2">
+							<h:outputText value="#{msg.user}:" />
+							<h:outputText value="#{reservationBean.current.user.userName}" />
+							<h:outputText value="#{msg.compName}:" />
+							<h:outputText value="#{reservationBean.current.computer.name}" />
+							<h:outputText value="#{msg.since}:" />
+							<h:outputText
+								value="#{reservationBean.getDateFormat(reservationBean.current.since)}" />
+							<h:outputText value="#{msg.until}:" />
+							<h:outputText
+								value="#{reservationBean.getDateFormat(reservationBean.current.until)}" />
+						</h:panelGrid>
+						<br />
+					</a4j:outputPanel>
+					<h:form>
+						<center>
+							<h:commandButton value="#{msg.confirmCancel}"
+								action="#{reservationBean.cancelReservation()}"
+								styleClass="ui-corner-all" />
+						</center>
+					</h:form>
+				</div>
+				<div id="editDialog" title="#{msg.editReservation}"
+					style="display: none;">
+					<div>
+						<h:form id="frm">
+							<a4j:outputPanel id="edit">
+								<h:panelGrid columns="2">
+									<h:outputText value="#{msg.userName}:" />
+									<h:outputText id="test"
+										value="#{reservationBean.current.user.userName}"
+										style="width: 130px;" />
+									<h:outputText value="#{msg.compName}:" />
+									<h:selectOneMenu value="#{reservationBean.editComputer}"
+										style="width: 132px;">
+										<f:selectItems value="#{computerBean.getComputersArray()}"
+											var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
+										<a4j:ajax event="change" render="table" />
+									</h:selectOneMenu>
 
-                                    <h:outputText value="#{msg.since}:"/>
-                                    <rich:calendar id="editCal" value="#{reservationBean.editSinceDate}" datePattern="#{languageBean.localePattern}" showApplyButton="true"><a4j:ajax event="change" render="table"/></rich:calendar>                            
-                                    <h:outputText value="#{msg.until}:"/>
-                                    <rich:calendar value="#{reservationBean.editUntilDate}" datePattern="#{languageBean.localePattern}" showApplyButton="true"><a4j:ajax event="change" render="table"/></rich:calendar>
-                                </h:panelGrid>
+									<h:outputText value="#{msg.since}:" />
+									<rich:calendar id="editCal"
+										value="#{reservationBean.editSinceDate}"
+										datePattern="#{languageBean.localePattern}"
+										showApplyButton="true">
+										<a4j:ajax event="change" render="table" />
+									</rich:calendar>
+									<h:outputText value="#{msg.until}:" />
+									<rich:calendar value="#{reservationBean.editUntilDate}"
+										datePattern="#{languageBean.localePattern}"
+										showApplyButton="true">
+										<a4j:ajax event="change" render="table" />
+									</rich:calendar>
+									<h:outputText value="#{msg.reservationComment}:" />
+									<h:inputText value="#{reservationBean.editComment}"
+										style="width: 130px;" />
+								</h:panelGrid>
 
-                            </a4j:outputPanel>
-                            <center>
-                                <h:commandButton id="updateBtn" value="#{msg.save}" action="#{reservationBean.update}" styleClass="ui-corner-all">
-                                </h:commandButton>
-                            </center>
-                        </h:form>
-                        <h:form id="cancel">
-                            <h:commandButton id="cancelBtn" value="#{msg.cancel}" action="#{reservationBean.eraseDates()}" style="visibility: hidden;"/>
-                        </h:form>
-                    </div>
-                </div>
-                <h:form>
-                    <rich:dataTable value="#{reservationBean.getReservationsByUser(userBean.current,userBean.method)}" var="res" style="border:solid 1px; width: 100%" rendered="#{reservationBean.userHasReservations(userBean.current,userBean.method)}" id="table">
-                        <rich:column sortBy="#{res.computer.name}" sortOrder="#{sortingBean.nameOrder}" id="name" style="width: 300px;">
-                            <f:facet name="header">
-                                <h:commandLink value="#{msg.name}" action="#{sortingBean.sortByName()}"/>
-                            </f:facet>
-                            <h:outputText value="#{res.computer.name}"/>
-                        </rich:column>
-                        <rich:column sortBy="#{res.since}" sortOrder="#{sortingBean.sinceOrder}" id="since" style="width: 300px;">
-                            <f:facet name="header">
-                                <h:commandLink value="#{msg.since}" action="#{sortingBean.sortBySince()}"/>
-                            </f:facet>
-                            <h:outputText value="#{reservationBean.getDateFormat(res.since)}"/>
-                        </rich:column>
-                        <rich:column sortBy="#{res.until}" sortOrder="#{sortingBean.untilOrder}" id="until" style="width: 300px;">
-                            <f:facet name="header">
-                                <h:commandLink value="#{msg.until}" action="#{sortingBean.sortByUntil()}"/>
-                            </f:facet>
-                            <h:form>
-                                <h:outputText value="#{reservationBean.getDateFormat(res.until)}"/>
-                            </h:form>
-                        </rich:column>
-                        <rich:column id="comment">
-                            <f:facet name="header">
-                                <h:commandLink value="#{msg.reservationComment}"/>
-                            </f:facet>
-                            <h:form>
-                                <h:outputText value="#{res.comment}"/>
-                            </h:form>
-                        </rich:column>
-                        <rich:column style="width: 50px;">
-                            <f:facet name="header">
-                                <h:outputText value="#{msg.action}"/>
-                            </f:facet>
-                            <h:form rendered="#{reservationBean.renderEditDeleteButtons(userBean.getUserSes(),res)}">
-                                <center>
-                                    <a4j:commandLink action="#{reservationBean.getCurrentReservation()}" onclick="showEditDialog();" value="#{msg.edit}" render="edit"/><br/>
-                                    <a4j:commandLink action="#{reservationBean.getCurrentReservation()}" onclick="showCancelDialog();" value="#{msg.cancel}" render="cancelPanel"/><br/>
-                                    <a4j:commandLink action="#{reservationBean.getCurrentReservation()}" onclick="showDeleteDialog();" value="#{msg.delete}" render="delete" rendered="#{userBean.getUserSes().admin}"/>
-                                </center>
-                            </h:form>
-                        </rich:column>
-                    </rich:dataTable>
-                </h:form>
-                <h:form style="float:right;">
-                    <h:commandButton value="#{msg.switchToAll}" action="#{userBean.changeMethod()}" rendered="#{!userBean.isAll()}" styleClass="ui-corner-all"/>
-                    <h:commandButton value="#{msg.switchToCurrent}" action="#{userBean.changeMethod()}" rendered="#{userBean.isAll()}" styleClass="ui-corner-all"/>
-                </h:form>
-                <br/>
-            </div>
+							</a4j:outputPanel>
+							<center>
+								<h:commandButton id="updateBtn" value="#{msg.save}"
+									action="#{reservationBean.update}" styleClass="ui-corner-all">
+								</h:commandButton>
+							</center>
+						</h:form>
+						<h:form id="cancel">
+							<h:commandButton id="cancelBtn" value="#{msg.cancel}"
+								action="#{reservationBean.eraseDates()}"
+								style="visibility: hidden;" />
+						</h:form>
+					</div>
+				</div>
+				<h:form>
+					<rich:dataTable
+						value="#{reservationBean.getReservationsByUser(userBean.current,userBean.method)}"
+						var="res" style="border:solid 1px; width: 100%"
+						rendered="#{reservationBean.userHasReservations(userBean.current,userBean.method)}"
+						id="table">
+						<rich:column sortBy="#{res.computer.name}"
+							sortOrder="#{sortingBean.nameOrder}" id="name"
+							style="width: 300px;">
+							<f:facet name="header">
+								<h:commandLink value="#{msg.name}"
+									action="#{sortingBean.sortByName()}" />
+							</f:facet>
+							<h:outputText value="#{res.computer.name}" />
+						</rich:column>
+						<rich:column sortBy="#{res.since}"
+							sortOrder="#{sortingBean.sinceOrder}" id="since"
+							style="width: 300px;">
+							<f:facet name="header">
+								<h:commandLink value="#{msg.since}"
+									action="#{sortingBean.sortBySince()}" />
+							</f:facet>
+							<h:outputText value="#{reservationBean.getDateFormat(res.since)}" />
+						</rich:column>
+						<rich:column sortBy="#{res.until}"
+							sortOrder="#{sortingBean.untilOrder}" id="until"
+							style="width: 300px;">
+							<f:facet name="header">
+								<h:commandLink value="#{msg.until}"
+									action="#{sortingBean.sortByUntil()}" />
+							</f:facet>
+							<h:form>
+								<h:outputText
+									value="#{reservationBean.getDateFormat(res.until)}" />
+							</h:form>
+						</rich:column>
+						<rich:column id="comment">
+							<f:facet name="header">
+								<h:commandLink value="#{msg.reservationComment}" />
+							</f:facet>
+							<h:form>
+								<h:outputText value="#{res.comment}" />
+							</h:form>
+						</rich:column>
+						<rich:column style="width: 50px;">
+							<f:facet name="header">
+								<h:outputText value="#{msg.action}" />
+							</f:facet>
+							<h:form
+								rendered="#{reservationBean.renderEditDeleteButtons(userBean.getUserSes(),res)}">
+								<center>
+									<a4j:commandLink
+										action="#{reservationBean.getCurrentReservation()}"
+										onclick="showEditDialog();" value="#{msg.edit}" render="edit" />
+									<br />
+									<a4j:commandLink
+										action="#{reservationBean.getCurrentReservation()}"
+										onclick="showCancelDialog();" value="#{msg.cancel}"
+										render="cancelPanel" />
+									<br />
+									<a4j:commandLink
+										action="#{reservationBean.getCurrentReservation()}"
+										onclick="showDeleteDialog();" value="#{msg.delete}"
+										render="delete" rendered="#{userBean.getUserSes().admin}" />
+								</center>
+							</h:form>
+						</rich:column>
+					</rich:dataTable>
+				</h:form>
+				<h:form style="float:right;">
+					<h:commandButton value="#{msg.switchToAll}"
+						action="#{userBean.changeMethod()}"
+						rendered="#{!userBean.isAll()}" styleClass="ui-corner-all" />
+					<h:commandButton value="#{msg.switchToCurrent}"
+						action="#{userBean.changeMethod()}" rendered="#{userBean.isAll()}"
+						styleClass="ui-corner-all" />
+				</h:form>
+				<br />
+			</div>
 
-        </rich:collapsiblePanel>
+		</rich:collapsiblePanel>
 
-        <rich:collapsiblePanel switchType="client" id="wholeCalendar" header="#{msg.myCalendar}" styleClass="panelClass">
-            <div id="wholeCal" style="display: inline-block">                
-                <div id="forms" style="margin-bottom: 5px;">
-                    <rich:message for="dtdForm"/>
-                    <h:form id="filterForm" style="float: right; clear: right;">
-                        <h:inputText id="filterQuery" value="#{userBean.filterQuery}"/>
-                        <button id="searchBtn" style="width: 29px; height: 17px;" />
-                    </h:form>
-                    <h:form id="dtdForm">
-                        <h:outputText value="#{msg.daysToShow}: "/><h:inputText value="#{userBean.daysToDisplay}" style="width: 15px;"/>
-                        <h:commandButton type="submit" value="#{msg.submit}" styleClass="ui-corner-all"/> 
-                    </h:form>
-                </div>
-                <div id="calendar" class="calendar" style="display: inline-block;">
+		<rich:collapsiblePanel switchType="client" id="wholeCalendar"
+			header="#{msg.myCalendar}" styleClass="panelClass">
+			<div id="wholeCal" style="display: inline-block">
+				<div id="forms" style="margin-bottom: 5px;">
+					<rich:message for="dtdForm" />
+					<h:form id="filterForm" style="float: right; clear: right;">
+						<h:inputText id="filterQuery" value="#{userBean.filterQuery}" />
+						<button id="searchBtn" style="width: 29px; height: 17px;" />
+					</h:form>
+					<h:form id="dtdForm">
+						<h:outputText value="#{msg.daysToShow}: " />
+						<h:inputText value="#{userBean.daysToDisplay}"
+							style="width: 15px;" />
+						<h:commandButton type="submit" value="#{msg.submit}"
+							styleClass="ui-corner-all" />
+					</h:form>
+				</div>
+				<div id="calendar" class="calendar" style="display: inline-block;">
 
-                </div>
-                <div id="reserveButton" style="display:none;">
-                    <h:form>
-                        <a4j:commandButton styleClass="ui-corner-all" value="#{msg.reserve}" onclick="$j('#addResDiv').fadeIn(700);"/>
-                    </h:form>
-                </div>
-                <div id="changeCalendarTypeDiv" style="float:right">
-                    <h:form id="changeCalendarType">
-                        <h:inputText id="calendarType" value="#{userBean.calendarType}" style="display:none"/>
-                        <h:commandButton id="changeToHours" value="#{msg.changeToHours}" rendered="#{userBean.isDays()}" onclick="changeCalType();" styleClass="ui-corner-all"/>
-                        <h:commandButton id="changeToDays" value="#{msg.changeToDays}" rendered="#{!userBean.isDays()}" onclick="changeCalType();" styleClass="ui-corner-all"/>
-                    </h:form>
-                </div>
-            </div>
-            <br/>
+				</div>
+				<div id="reserveButton" style="display: none;">
+					<h:form>
+						<a4j:commandButton styleClass="ui-corner-all"
+							value="#{msg.reserve}" onclick="$j('#addResDiv').fadeIn(700);" />
+					</h:form>
+				</div>
+				<div id="changeCalendarTypeDiv" style="float: right">
+					<h:form id="changeCalendarType">
+						<h:inputText id="calendarType" value="#{userBean.calendarType}"
+							style="display:none" />
+						<h:commandButton id="changeToHours" value="#{msg.changeToHours}"
+							rendered="#{userBean.isDays()}" onclick="changeCalType();"
+							styleClass="ui-corner-all" />
+						<h:commandButton id="changeToDays" value="#{msg.changeToDays}"
+							rendered="#{!userBean.isDays()}" onclick="changeCalType();"
+							styleClass="ui-corner-all" />
+					</h:form>
+				</div>
+			</div>
+			<br />
 
-            <h:form id="redirectForm">
-                <h:inputText id="redirectInput" value="#{computerBean.computerId}" style="display:none;"/>
-                <h:commandButton id="redirectButton" action="#{computerBean.redirect()}" style="display:none"/>
-            </h:form>
-            <div id="addResDiv" class="addRes" style="display: none">
-                <rich:panel>  
-                    <a4j:outputPanel ajaxRendered="false">
-                        <rich:message id="errorMessage" ajaxRendered="false"/>
-                    </a4j:outputPanel>
-                    <h:outputText value="#{msg.reallyReserve}?"/>
-                    <div id="labels">
-                        <ul id="UlRes">
+			<h:form id="redirectForm">
+				<h:inputText id="redirectInput" value="#{computerBean.computerId}"
+					style="display:none;" />
+				<h:commandButton id="redirectButton"
+					action="#{computerBean.redirect()}" style="display:none" />
+			</h:form>
+			<div id="addResDiv" class="addRes" style="display: none">
+				<rich:panel>
+					<a4j:outputPanel ajaxRendered="false">
+						<rich:message id="errorMessage" ajaxRendered="false" />
+					</a4j:outputPanel>
+					<h:outputText value="#{msg.reallyReserve}?" />
+					<div id="labels">
+						<ul id="UlRes">
 
-                        </ul>
-                    </div>
+						</ul>
+					</div>
 
-                    <h:form id="addResForm">
-                        <a4j:commandButton value="#{msg.reserve}!" action="#{reservationBean.editReservation()}" onbegin="toBean(); #{reservationBean.setUser_id(userBean.getIdSes())}" oncomplete="hideWindow(#{!reservationBean.badReservation})" render="errorMessage" styleClass="ui-corner-all"/>
-                        <a4j:commandButton value="#{msg.cancel}" onclick="hideWindow(true)" styleClass="ui-corner-all"/>
-                        <h:form id="selectForm" style="display:none">
-                            <h:inputText id="selectedColumns" value="#{reservationBean.selected}" style="display:none;"/>
-                            <h:inputText id="selectedReservations" value="#{reservationBean.selectedRes}" style="display:none"/>
-                            <a4j:commandButton type="submit" id="selectButton" style="display:none"/> 
-                        </h:form>
-                    </h:form> 
-                </rich:panel>
-            </div>
-        </rich:collapsiblePanel>
+					<h:form id="addResForm">
+						<a4j:commandButton value="#{msg.reserve}!"
+							action="#{reservationBean.editReservation()}"
+							onbegin="toBean(); #{reservationBean.setUser_id(userBean.getIdSes())}"
+							oncomplete="hideWindow(#{!reservationBean.badReservation})"
+							render="errorMessage" styleClass="ui-corner-all" />
+						<a4j:commandButton value="#{msg.cancel}"
+							onclick="hideWindow(true)" styleClass="ui-corner-all" />
+						<h:form id="selectForm" style="display:none">
+							<h:inputText id="selectedColumns"
+								value="#{reservationBean.selected}" style="display:none;" />
+							<h:inputText id="selectedReservations"
+								value="#{reservationBean.selectedRes}" style="display:none" />
+							<a4j:commandButton type="submit" id="selectButton"
+								style="display:none" />
+						</h:form>
+					</h:form>
+				</rich:panel>
+			</div>
+		</rich:collapsiblePanel>
 
-        <script type="text/javascript">
+		<script type="text/javascript">
             var cols = new Array();
             refreshCal(null);
 
@@ -477,19 +584,19 @@
             }
         </script>
 
-    </ui:define>
+	</ui:define>
 
-    <ui:define name="left">
-        <ui:include src="leftBar.xhtml"/>
-    </ui:define>
+	<ui:define name="left">
+		<ui:include src="leftBar.xhtml" />
+	</ui:define>
 
-    <ui:define name="top">
-        <ui:include src="topBar.xhtml"/>
-    </ui:define>
+	<ui:define name="top">
+		<ui:include src="topBar.xhtml" />
+	</ui:define>
 
-    <ui:define name="bottom">
-        <ui:include src="bottomBar.xhtml"/>
-    </ui:define>
+	<ui:define name="bottom">
+		<ui:include src="bottomBar.xhtml" />
+	</ui:define>
 
 
 
