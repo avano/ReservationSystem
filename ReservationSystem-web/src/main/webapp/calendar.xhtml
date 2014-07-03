@@ -1,84 +1,117 @@
 
 <ui:composition template="./UITemplate.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:a4j="http://richfaces.org/a4j"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:f="http://java.sun.com/jsf/core">
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core">
 
-    <h:head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    </h:head>
+	<h:head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	</h:head>
 
-    <ui:define name="content">
-        <rich:panel header="#{msg.calendar}" styleClass="panelClass">
-            <rich:messages/>
-            <div id="forms" style="margin-bottom: 5px;">
-                <h:form id="filterForm" style="float: right; clear: right;">
-                    <h:inputText id="filterQuery" value="#{userBean.filterQuery}"/>
-                    <button id="searchBtn" style="width: 29px; height: 17px;" />
-                </h:form>
-                <h:form id="dtdForm">
-                    <h:outputText value="#{msg.daysToShow}: "/><h:inputText value="#{userBean.daysToDisplay}" style="width: 15px;"/>
-                    <h:commandButton type="submit" value="#{msg.submit}" styleClass="ui-corner-all"/> 
-                </h:form>
-            </div>
-            <div id="calendar" class="calendar" styleClass="divClass">
-            </div>
-            <div id="reserveButton">
-                <h:form>
-                    <a4j:commandButton styleClass="ui-corner-all" value="#{msg.reserve}" onclick="$j('#addResDiv').fadeIn(700);" style="float:left;"/>
-                </h:form>
-            </div>
-            <div id="changeCalendarTypeDiv">
-                <h:form id="changeCalendarType" style="float:right;">
-                    <h:inputText id="calendarType" value="#{userBean.calendarType}" style="display:none"/>
-                    <h:commandButton id="changeToHours" value="#{msg.changeToHours}" rendered="#{userBean.isDays()}" onclick="changeCalType();" styleClass="ui-corner-all"/>
-                    <h:commandButton id="changeToDays" value="#{msg.changeToDays}" rendered="#{!userBean.isDays()}" onclick="changeCalType();" styleClass="ui-corner-all"/>
-                </h:form>
-            </div>
-            <br/>
-            <div id="addResDiv" class="addRes" style="display: none">
-                <rich:panel>  
-                    <a4j:outputPanel ajaxRendered="false">
-                        <!--                        <rich:message id="errorMessage" ajaxRendered="false"/>-->
-                    </a4j:outputPanel>
-                    <h:outputText value="#{msg.reallyReserve}?"/>
-                    <div id="labels">
-                        <ul id="UlRes">
+	<ui:define name="content">
+		<rich:panel header="#{msg.calendar}" styleClass="panelClass">
+			<rich:messages />
+			<div id="forms" style="margin-bottom: 5px;">
+				<h:form id="filterForm" style="float: right; clear: right;">
+					<h:inputText id="filterQuery" value="#{userBean.filterQuery}" />
+					<button id="searchBtn" style="width: 29px; height: 17px;" />
+				</h:form>
+				<h:form id="dtdForm">
+					<h:outputText value="#{msg.daysToShow}: " />
+					<h:inputText value="#{userBean.daysToDisplay}" style="width: 15px;" />
+					<h:commandButton type="submit" value="#{msg.submit}"
+						styleClass="ui-corner-all" />
+				</h:form>
+			</div>
+			<div id="calendar" class="calendar" styleClass="divClass" style="position:relative; width:100%"></div>
+			<div id="reserveButton">
+				<h:form>
+					<a4j:commandButton styleClass="ui-corner-all"
+						value="#{msg.reserve}" onclick="$j('#addResDiv').fadeIn(700);"
+						style="float:left;" />
+				</h:form>
+			</div>
+			<div id="changeCalendarTypeDiv">
+				<h:form id="changeCalendarType" style="float:right;">
+					<h:inputText id="calendarType" value="#{userBean.calendarType}"
+						style="display:none" />
+					<h:commandButton id="changeToHours" value="#{msg.changeToHours}"
+						rendered="#{userBean.isDays()}" onclick="changeCalType();"
+						styleClass="ui-corner-all" />
+					<h:commandButton id="changeToDays" value="#{msg.changeToDays}"
+						rendered="#{!userBean.isDays()}" onclick="changeCalType();"
+						styleClass="ui-corner-all" />
+				</h:form>
+			</div>
+			<br />
+			<div id="addResDiv" class="addRes" style="display: none">
+				<rich:panel>
+					<a4j:outputPanel ajaxRendered="false">
+						<!--                        <rich:message id="errorMessage" ajaxRendered="false"/>-->
+					</a4j:outputPanel>
+					<h:outputText value="#{msg.reallyReserve}?" />
+					<div id="labels">
+						<ul id="UlRes">
 
-                        </ul>
-                    </div>
-                    <h:form id="redirectForm">
-                        <h:inputText id="redirectInput" value="#{computerBean.computerId}" style="display:none"/>
-                        <h:commandButton id="redirectButton" action="#{computerBean.redirect()}" style="display:none"/>
-                    </h:form>
-                    <div id="errorDialog" title="#{msg.error}" style="display:none;">
-                        <a4j:outputPanel id="errorPanel">
-                            <h:outputText value="#{msg.errorReserving}: #{msg.reserved}"/><br/><br/>
+						</ul>
+					</div>
 
-                            <h:outputText value="#{reservationBean.error}" escape="false"/>
-                        </a4j:outputPanel>
-                        <h:form>
-                            <center>
-                                <a4j:commandButton value="OK" onclick="hideError()" styleClass="ui-corner-all"/>
-                            </center>
-                        </h:form>
-                    </div>
-                    <h:form id="addResForm">
-                        <a4j:commandButton value="#{msg.reserve}!" action="#{reservationBean.addNewReservation()}" onbegin="toBean(); #{reservationBean.setUser_id(userBean.getIdSes())}" oncomplete="hideWindow(#{!reservationBean.badReservation})" render="errorPanel" styleClass="ui-corner-all"/>
-                        <a4j:commandButton value="#{msg.cancel}" onclick="hideWindow(true)" styleClass="ui-corner-all"/>
-                        <h:form id="selectForm" style="display:none">
-                            <h:inputText id="selectedColumns" value="#{reservationBean.selected}" style="display:none"/>
-                            <h:inputText id="selectedReservations" value="#{reservationBean.selectedRes}" style="display:none"/>
-                            <a4j:commandButton type="submit" id="selectButton" style="display:none"/> 
-                        </h:form>
-                    </h:form> 
-                </rich:panel>
-            </div>
-        </rich:panel>
-        <script type="text/javascript">
+					<h:form id="redirectForm">
+						<h:inputText id="redirectInput" value="#{computerBean.computerId}"
+							style="display:none" />
+						<h:commandButton id="redirectButton"
+							action="#{computerBean.redirect()}" style="display:none" />
+					</h:form>
+					<div id="errorDialog" title="#{msg.error}" style="display: none;">
+						<a4j:outputPanel id="errorPanel">
+							<h:outputText value="#{msg.errorReserving}: #{msg.reserved}" />
+							<br />
+							<br />
+
+							<h:outputText value="#{reservationBean.error}" escape="false" />
+						</a4j:outputPanel>
+						<h:form>
+							<center>
+								<a4j:commandButton value="OK" onclick="hideError()"
+									styleClass="ui-corner-all" />
+							</center>
+						</h:form>
+					</div>
+					<h:form id="addResForm">
+						<div id="comment">
+							<table width="100%">
+								<tr>
+									<td width="30%"><h:outputText
+											value="#{msg.comment}:" class="output"
+											style="float:left;" /></td>
+									<td width="70%"><h:inputText size="32" id="comment"
+											value="#{reservationBean.comment}" /></td>
+								</tr>
+							</table>
+						</div>
+						<a4j:commandButton value="#{msg.reserve}!"
+							action="#{reservationBean.addNewReservation()}"
+							onbegin="toBean(); #{reservationBean.setUser_id(userBean.getIdSes())}"
+							oncomplete="hideWindow(#{!reservationBean.badReservation})"
+							render="errorPanel" styleClass="ui-corner-all" />
+						<a4j:commandButton value="#{msg.cancel}"
+							onclick="hideWindow(true)" styleClass="ui-corner-all" />
+						<h:form id="selectForm" style="display:none">
+							<h:inputText id="selectedColumns"
+								value="#{reservationBean.selected}" style="display:none" />
+							<h:inputText id="selectedReservations"
+								value="#{reservationBean.selectedRes}" style="display:none" />
+							<a4j:commandButton type="submit" id="selectButton"
+								style="display:none" />
+						</h:form>
+					</h:form>
+				</rich:panel>
+			</div>
+		</rich:panel>
+		<script type="text/javascript">
             var cols = new Array();
             refreshCal(null);
             
@@ -310,18 +343,18 @@
             }
         </script>
 
-    </ui:define>
+	</ui:define>
 
-    <ui:define name="left">
-        <ui:include src="leftBar.xhtml"/>
-    </ui:define>
+	<ui:define name="left">
+		<ui:include src="leftBar.xhtml" />
+	</ui:define>
 
-    <ui:define name="top">
-        <ui:include src="topBar.xhtml"/>
-    </ui:define>
+	<ui:define name="top">
+		<ui:include src="topBar.xhtml" />
+	</ui:define>
 
-    <ui:define name="bottom">
-        <ui:include src="bottomBar.xhtml"/>
-    </ui:define>
+	<ui:define name="bottom">
+		<ui:include src="bottomBar.xhtml" />
+	</ui:define>
 
 </ui:composition>

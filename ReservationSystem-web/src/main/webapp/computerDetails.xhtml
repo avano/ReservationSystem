@@ -110,7 +110,7 @@
             <div>
                 <h:form id="tabulka">
                     <rich:dataTable value="#{reservationBean.getReservationsByComp(computerBean.selected.id,userBean.method)}" var="res" style="border:solid 1px; width: 100%" rendered="#{reservationBean.compHasReservations(computerBean.selected.id,userBean.method)}" id="table">
-                        <rich:column sortBy="#{res.user.getUserName()}" sortOrder="#{sortingBean.nameOrder}" id="name">
+                        <rich:column sortBy="#{res.user.getUserName()}" sortOrder="#{sortingBean.nameOrder}" id="name" style="width: 300px;">
                             <f:facet name="header">
                                 <h:form>
                                     <h:commandLink value="#{msg.userName}" action="#{sortingBean.sortByName()}"/>
@@ -118,18 +118,26 @@
                             </f:facet>
                             <h:outputText value="#{res.user.getUserName()}"/>
                         </rich:column>
-                        <rich:column sortBy="#{res.since}" sortOrder="#{sortingBean.sinceOrder}" id="since">
+                        <rich:column sortBy="#{res.since}" sortOrder="#{sortingBean.sinceOrder}" id="since" style="width: 300px;">
                             <f:facet name="header">
                                 <h:commandLink value="#{msg.since}" action="#{sortingBean.sortBySince()}"/>
                             </f:facet>
                             <h:outputText value="#{reservationBean.getDateFormat(res.since)}"/>
                         </rich:column>
-                        <rich:column sortBy="#{res.until}" sortOrder="#{sortingBean.untilOrder}" id="until">
+                        <rich:column sortBy="#{res.until}" sortOrder="#{sortingBean.untilOrder}" id="until" style="width: 300px;">
                             <f:facet name="header">
                                 <h:commandLink value="#{msg.until}" action="#{sortingBean.sortByUntil()}"/>
                             </f:facet>
                             <h:form>
                                 <h:outputText value="#{reservationBean.getDateFormat(res.until)}"/>
+                            </h:form>
+                        </rich:column>
+                        <rich:column id="comment">
+                            <f:facet name="header">
+                                <h:commandLink value="#{msg.reservationComment}"/>
+                            </f:facet>
+                            <h:form>
+                                <h:outputText value="#{res.comment}"/>
                             </h:form>
                         </rich:column>
                         <rich:column style="width: 50px;">  

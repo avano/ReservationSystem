@@ -367,7 +367,7 @@
 
                                             $calendarBody += '<td class="reserved"><div class=\"cellwidth\">';
                                         }
-                                        $calendarBody += compReservations[q].user+'</div></td>';
+                                        $calendarBody += compReservations[q].comment+'</div></td>';
                                         reserved = true;
                                         break;
                                     }
@@ -471,7 +471,7 @@
                                     else {
                                         $calendarBody += '<td class="reserved"><div class=\"cellwidth\">';
                                     }
-                                    $calendarBody += compReservations[q].user+'</div></td>';
+                                    $calendarBody += compReservations[q].comment+'</div></td>';
                                     reserved = true;
                                     break;
                                 }
