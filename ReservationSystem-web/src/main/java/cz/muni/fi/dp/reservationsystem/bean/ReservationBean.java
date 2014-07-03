@@ -58,8 +58,17 @@ public class ReservationBean implements Serializable {
 	private String editSinceDate = "";
 	private String editUntilDate = "";
 	private String editComputer = "";
+	private String editComment = "";
 	private String error = "";
 	private String comment = "";
+
+	public String getEditComment() {
+		return editComment;
+	}
+
+	public void setEditComment(String editComment) {
+		this.editComment = editComment;
+	}
 
 	public String getComment() {
 		return comment;
@@ -484,6 +493,7 @@ public class ReservationBean implements Serializable {
 		editSinceDate = getDateFormat(current.getSince());
 		editUntilDate = getDateFormat(current.getUntil());
 		editComputer = current.getComputer().getId() + "";
+		editComment = current.getComment();
 	}
 
 	/**
@@ -548,8 +558,10 @@ public class ReservationBean implements Serializable {
 		current.setComputer(c);
 		current.setSince(newSinceDate);
 		current.setUntil(newUntilDate);
+		current.setComment(editComment);
 		editSinceDate = "";
 		editUntilDate = "";
+		editComment = "";
 		if (!rdao.update(current)) {
 			FacesContext.getCurrentInstance()
 					.addMessage(
